@@ -56,11 +56,6 @@ def predict(model, edges):
 
 # Start to load the train data
 
-train_edges = list()
-raw_train_data = pandas.read_csv('../data/train.csv')
-for i, record in raw_train_data.iterrows():
-    train_edges.append((str(record['head']), str(record['tail'])))
-
 print('finish loading the train data.')
 
 # Start to load the valid/test data
@@ -77,12 +72,12 @@ for i, record in raw_valid_data.iterrows():
 print('finish loading the valid/test data.')
 
 # hyperparameter
-number_walks = 10
-walk_length = 30
-dimension = 20
-window_size = 10
+number_walks = 5
+walk_length = 10
+dimension = 15
+window_size = 5
 workers = 10
-iterations = 10
+iterations = 20
 
 G = load_csv('../data/train.csv')
 
@@ -104,19 +99,19 @@ for i, w in enumerate(model.wv.index2word):
     resulted_embeddings[w] = model.wv.syn0[i]
 
 # AUC-ROC score on the validation set
-#tmp_AUC_score = get_AUC(model, valid_positive_edges, valid_negative_edges)
-#print('tmp_accuracy:', tmp_AUC_score)
+tmp_AUC_score = get_AUC(model, valid_positive_edges, valid_negative_edges)
+print('tmp_accuracy:', tmp_AUC_score)
 
 # test set prediction
-test_edges = list()
-raw_test_data = pandas.read_csv('../data/test.csv')
-for i, record in raw_test_data.iterrows():
-    test_edges.append((str(record['head']), str(record['tail'])))
+#test_edges = list()
+#raw_test_data = pandas.read_csv('../data/test.csv')
+#for i, record in raw_test_data.iterrows():
+#    test_edges.append((str(record['head']), str(record['tail'])))
 
-test_predict = predict(model,test_edges)
+#test_predict = predict(model,test_edges)
 
-df = pandas.DataFrame({'head':raw_test_data['head'],'label': 'N/A','score':test_predict,'tail':raw_test_data['tail']})
-df.to_csv("../test.csv",index  = 0)
+#df = pandas.DataFrame({'head':raw_test_data['head'],'label': 'N/A','score':test_predict,'tail':raw_test_data['tail']})
+#df.to_csv("../test.csv",index  = 0)
 
 print('end')
 
