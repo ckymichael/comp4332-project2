@@ -55,7 +55,7 @@ def predict(model, edges):
     return y_scores
 
 # Start to load the train data
-
+G = load_csv('../data/train.csv')
 print('finish loading the train data.')
 
 # Start to load the valid/test data
@@ -78,8 +78,6 @@ dimension = 15
 window_size = 5
 workers = 10
 iterations = 20
-
-G = load_csv('../data/train.csv')
 
 print("Number of nodes: {}".format(len(G.nodes())))
 num_walks = len(G.nodes()) * number_walks
